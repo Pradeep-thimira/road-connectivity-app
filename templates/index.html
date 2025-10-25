@@ -1,26 +1,102 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
   <title>Road Connectivity Tool</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
-  <h1>Road Connectivity Tool</h1>
-  <form id="upload-form" enctype="multipart/form-data">
-    <input type="file" id="shpzip" name="file" accept=".zip">
-    <button type="submit">Upload & Run Analysis</button>
-  </form>
-  <div id="actions" class="hidden">
-    <button id="download-shp">Download Shapefile</button>
-    <button id="download-geojson">Download GeoJSON</button>
-    <button id="reset-file">Reset</button>
+  <div id="app">
+    <header>
+      <h1>Road Connectivity Analyzer</h1>
+    </header>
+
+    <main>
+      <section class="controls">
+        <form id="upload-form">
+          <label for="shpzip">Upload ZIP containing shapefile:</label>
+          <div id="drop-zone" class="drop-zone">
+            <div class="icon"><i class="fa-solid fa-upload"></i></div>
+            <p>Drag & Drop your ZIP here or Click to Choose File</p>
+            <input id="shpzip" name="file" type="file" accept=".zip" hidden />
+            <div id="file-message" class="file-message"></div>
+            
+          </div>
+          <!-- put this inside the drop-zone element -->
+           <button type="button" id="reset-file">Reset File</button>
+           
+
+          <button type="submit">Upload & Run Analysis</button>
+        </form>
+        
+
+        <div id="actions" class="hidden">
+          <button id="download-shp"><i class="fas fa-download "></i>&nbsp;&nbsp; Download Shapefile </button>
+  
+          <button id="download-geojson"><i class="fas fa-download"></i>&nbsp;&nbsp; Download GeoJSON</button>
+          <div id="summary"></div>
+        </div>
+      
+      </section>
+
+      <section id="map-container">
+        <div id="map"></div>
+      </section>
+    </main>
+    <p></p>
+
+    <footer>
+      <small>Created for automated connectivity analysis. Uses OpenStreetMap (Leaflet) for basemap.</small>
+    </footer>
   </div>
-  <div id="summary"></div>
-  <div id="map" style="height:600px;margin-top:20px;"></div>
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const dropZone = document.getElementById("drop-zone");
+    const fileInput = document.getElementById("shpzip");
+    const fileMessage = document.getElementById("file-message");
+
+    function validateFile(file) {
+      if (!file) return;
+      if (file.name.toLowerCase().endsWith(".zip")) {
+        fileMessage.textContent = `Selected: ${file.name}`;
+        fileMessage.className = "file-message success";
+      } else {
+        fileMessage.textContent = "Error: Only .zip files are allowed.";
+        fileMessage.className = "file-message error";
+        fileInput.value = "";
+      }
+    }
+
+    dropZone.addEventListener("click", () => fileInput.click());
+
+    dropZone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropZone.classList.add("dragover");
+    });
+
+    dropZone.addEventListener("dragleave", () => {
+      dropZone.classList.remove("dragover");
+    });
+
+    dropZone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      dropZone.classList.remove("dragover");
+      if (e.dataTransfer.files.length) {
+        fileInput.files = e.dataTransfer.files;
+        validateFile(fileInput.files[0]);
+      }
+    });
+
+    fileInput.addEventListener("change", () => {
+      if (fileInput.files.length) {
+        validateFile(fileInput.files[0]);
+      }
+    });
+  </script>
   <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>
