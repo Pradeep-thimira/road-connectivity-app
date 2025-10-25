@@ -1,0 +1,27 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+h1 { color: #003366; }
+button {
+  padding: 8px 16px;
+  margin: 5px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+button:hover { background: #0056b3; }
+.hidden { display: none; }
+.legend {
+  background: white;
+  padding: 6px;
+  border-radius: 5px;
+  line-height: 1.5em;
+}
+.legend i {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 5px;
+}

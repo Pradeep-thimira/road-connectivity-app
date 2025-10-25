@@ -1,0 +1,8 @@
+Flask
+geopandas
+networkx
+shapely
+numpy
+fiona
+pyproj
+gunicorn

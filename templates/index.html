@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Road Connectivity Tool</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+  <h1>Road Connectivity Tool</h1>
+  <form id="upload-form" enctype="multipart/form-data">
+    <input type="file" id="shpzip" name="file" accept=".zip">
+    <button type="submit">Upload & Run Analysis</button>
+  </form>
+  <div id="actions" class="hidden">
+    <button id="download-shp">Download Shapefile</button>
+    <button id="download-geojson">Download GeoJSON</button>
+    <button id="reset-file">Reset</button>
+  </div>
+  <div id="summary"></div>
+  <div id="map" style="height:600px;margin-top:20px;"></div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>
