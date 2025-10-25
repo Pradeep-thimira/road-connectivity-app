@@ -150,6 +150,8 @@ This project is open source under the **MIT License**.
 
 ## 👨‍💻 Author
 
-Developed by **Thimira Pradeep **
+Developed by Thimira Pradeep 
+
 📍 Urban and Regional Planning Student
+
 💡 Designed for analyzing road network connectivity in urban planning contexts.
