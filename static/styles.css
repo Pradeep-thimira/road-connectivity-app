@@ -232,6 +232,26 @@ body {
     border: 1px solid #555;
 }
 
+@media (max-width: 600px) {
+  body {
+    margin: 10px;
+  }
+
+  form, #actions {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  button {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  #map {
+    height: 400px;
+  }
+}
 
 
 
